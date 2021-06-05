@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Components.Authorization
 @inherits LayoutComponentBase
 
 <div class="page">
@@ -7,6 +8,15 @@
 
     <div class="main">
         <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    Hello, @context.User.Identity.Name!
+                    <a href="/.auth/logout?post_logout_redirect_uri=/">Log out</a>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="/login-providers">Log in</a>
+                </NotAuthorized>
+            </AuthorizeView>
             <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
         </div>
 
