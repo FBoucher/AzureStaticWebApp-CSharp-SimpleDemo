@@ -20,21 +20,7 @@ namespace demo.Function
             ClaimsPrincipal principal)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-            bool isClaimValid = true;
-            string userId = string.Empty;
-
-            if (principal == null)
-            {
-                log.LogWarning("No principal.");
-                isClaimValid = false;
-            }
-
-            if(isClaimValid)
-            {
-                userId = principal.FindFirst(ClaimTypes.GivenName).Value;
-                log.LogInformation("Authenticated user {user}.", userId);
-            }
-
+      
             string name = req.Query["name"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
