@@ -1,11 +1,14 @@
 @page "/login-providers"
 
+
+
 @{
-    var providers = new Dictionary<string, string>
+
+    var providers = new Dictionary<string, string[]>
     {
-        { "github", "GitHub" }, 
-        { "twitter", "Twitter" },
-        { "microsoft", "Azure AD" }
+        { "github", new string[2]{ "github", "GitHub"}}, 
+        { "twitter", new string[2]{ "twitter", "Twitter" }},
+        { "microsoft", new string[2]{ "aad", "Azure AD" }}
     };
 }
 
@@ -16,9 +19,9 @@
     {
         <div class="row">
             <div class="col-sm-12 col-md-9 col-lg-6">
-                    <a class="btn btn-block btn-lg btn-social btn-@provider.Key" href="/.auth/login/@provider.Key">
-                        <span class="fa fa-@provider.Key"></span> Sign in with @provider.Value
-                    </a>
+                <a class="btn btn-block btn-lg btn-social btn-@provider.Key" href="/.auth/login/@provider.Value[0]">
+                    <span class="fa fa-@provider.Key"></span> Sign in with @provider.Value[1]
+                </a>
             </div>
         </div>
     }
