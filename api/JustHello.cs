@@ -9,13 +9,13 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Security.Claims;
 
-namespace Company.Function
+namespace demo.Function
 {
-    public static class HelloYou
+    public static class JustHello
     {
-        [FunctionName("HelloYou")]
+        [FunctionName("JustHello")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "secured/HelloYou")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req,
             ILogger log,
             ClaimsPrincipal principal)
         {

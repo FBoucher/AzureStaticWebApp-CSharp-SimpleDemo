@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Security.Claims;
 
-namespace Company.Function
+namespace demo.Function
 {
     public static class HelloYou
     {
