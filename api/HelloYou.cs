@@ -21,6 +21,7 @@ namespace Company.Function
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
             bool isClaimValid = true;
+            string userId = string.Empty;
 
             if (principal == null)
             {
@@ -28,39 +29,15 @@ namespace Company.Function
                 isClaimValid = false;
             }
 
-            if (isClaimValid && principal.Identity == null)
-            {
-                log.LogWarning("No identity.");
-                isClaimValid = false;
-            }
-
-            if (isClaimValid && !principal.Identity.IsAuthenticated)
-            {
-                log.LogWarning("Request was not authenticated.");
-                isClaimValid = false;
-            }
-
-            if (isClaimValid && principal.FindFirst(ClaimTypes.GivenName) is null)
-            {
-                log.LogError("Claim not Found");
-                isClaimValid = false;
-            }
-
             if(isClaimValid)
             {
-                var userId = principal.FindFirst(ClaimTypes.GivenName).Value;
+                userId = principal.FindFirst(ClaimTypes.GivenName).Value;
                 log.LogInformation("Authenticated user {user}.", userId);
             }
 
-            string name = req.Query["name"];
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            string responseMessage = string.IsNullOrEmpty(name)
+            string responseMessage = string.IsNullOrEmpty(userId)
                 ? "This SECURED HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Bonjour Hi, {name}. This SECURED HTTP triggered function executed successfully.";
+                : $"Bonjour Hi, {userId}. This SECURED HTTP triggered function executed successfully.";
 
             return new OkObjectResult(responseMessage);
         }
