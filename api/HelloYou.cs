@@ -35,15 +35,9 @@ namespace Company.Function
                 log.LogInformation("Authenticated user {user}.", userId);
             }
 
-            string name = req.Query["name"];
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            string responseMessage = string.IsNullOrEmpty(name)
+            string responseMessage = string.IsNullOrEmpty(userId)
                 ? "This SECURED HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Bonjour Hi, {name}. This SECURED HTTP triggered function executed successfully.";
+                : $"Bonjour Hi, {userId}. This SECURED HTTP triggered function executed successfully.";
 
             return new OkObjectResult(responseMessage);
         }
