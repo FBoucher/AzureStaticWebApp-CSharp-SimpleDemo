@@ -20,7 +20,15 @@ namespace demo.Function
             ClaimsPrincipal principal)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-           
+
+            bool isClaimValid = true;
+
+            if (principal == null && !principal.Identity.IsAuthenticated)
+            {
+                log.LogWarning("Request was not authenticated.");
+                isClaimValid = false;
+            }
+
             string name = req.Query["name"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
