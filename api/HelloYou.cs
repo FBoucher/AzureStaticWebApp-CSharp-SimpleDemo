@@ -11,16 +11,24 @@ using System.Security.Claims;
 
 namespace demo.Function
 {
-    public static class JustHello
+    public static class HelloYou
     {
-        [FunctionName("JustHello")]
+        [FunctionName("HelloYou")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "secured/HelloYou")] HttpRequest req,
             ILogger log,
             ClaimsPrincipal principal)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-      
+
+            bool isClaimValid = true;
+
+            if (principal == null && !principal.Identity.IsAuthenticated)
+            {
+                log.LogWarning("Request was not authenticated.");
+                isClaimValid = false;
+            }
+
             string name = req.Query["name"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
