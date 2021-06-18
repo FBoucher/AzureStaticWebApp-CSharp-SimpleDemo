@@ -23,7 +23,7 @@ namespace demo.Function
 
             bool isClaimValid = true;
 
-            if (principal == null && !principal.Identity.IsAuthenticated)
+            if (principal == null || !principal.Identity.IsAuthenticated)
             {
                 log.LogWarning("Request was not authenticated.");
                 isClaimValid = false;
